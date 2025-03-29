@@ -13,31 +13,6 @@ public class Tree<E> {
         root = null;
     }
 
-    public void insert(E data) {
-        Queue<Node<E>> queue = new Queue<>(100);
-        Node<E> newNode = new Node<>(data);
-        if (root == null) {
-            root = newNode;
-        } else {
-            queue.enqueue(root);
-            while (!queue.isEmpty()) {
-                Node<E> currentNode = queue.dequeue();
-                if (currentNode.getLeft() == null) {
-                    currentNode.setLeft(newNode);
-                    break;
-                } else {
-                    queue.enqueue(currentNode.getLeft());
-                }
-                if (currentNode.getRight() == null) {
-                    currentNode.setRight(newNode);
-                    break;
-                } else {
-                    queue.enqueue(currentNode.getRight());
-                }
-            }
-        }
-    }
-
     public Node<E> createTree() {
         Queue<Node<E>> queue = new Queue<>(100);
 
@@ -91,7 +66,4 @@ public class Tree<E> {
             System.out.print(node.getData() + " ");
         }
     }
-
 }
-
-
