@@ -1,34 +1,36 @@
 package com.dmehta2.datastructures.tree;
 
-public class BinaryTree {
+import com.dmehta2.datastructures.queues.Queue;
 
-    Node root;
+public class BinaryTree<E> extends Tree<E> {
 
 
-//    public void insert(int data) {
-//        root = insertRec(root, data);
-//    }
-//
-//    private Node insertRec(Node root, int data) {
-//        if (root == null) {
-//            root = new Node(data);
-//            return root;
-//        } else {
-//            if (data < root.getData()) {
-//                root.setLeft(insertRec(root.getLeft(), data));
-//            } else if (data > root.getData()) {
-//                root.setRight(insertRec(root.getRight(), data));
-//            }
-//        }
-//        return root;
-//    }
-
-    // Inorder traversal
-    public void inorder() {
-        inorderRec(root);
+    public void insert(E data) {
+        Queue<Node<E>> queue = new Queue<>(100);
+        Node<E> newNode = new Node<>(data);
+        if (root == null) {
+            root = newNode;
+        } else {
+            queue.enqueue(root);
+            while (!queue.isEmpty()) {
+                Node<E> currentNode = queue.dequeue();
+                if (currentNode.getLeft() == null) {
+                    currentNode.setLeft(newNode);
+                    break;
+                } else {
+                    queue.enqueue(currentNode.getLeft());
+                }
+                if (currentNode.getRight() == null) {
+                    currentNode.setRight(newNode);
+                    break;
+                } else {
+                    queue.enqueue(currentNode.getRight());
+                }
+            }
+        }
     }
 
-    private void inorderRec(Node root) {
+    protected void inorderRec(Node<E> root) {
         if (root != null) {
             inorderRec(root.getLeft());
             System.out.print(root.getData() + " ");
@@ -36,11 +38,7 @@ public class BinaryTree {
         }
     }
 
-    public void preorder() {
-        preorderRec(root);
-    }
-
-    private void preorderRec(Node root) {
+    protected void preorderRec(Node<E> root) {
         if (root != null) {
             System.out.print(root.getData() + " ");
             preorderRec(root.getLeft());
@@ -48,11 +46,7 @@ public class BinaryTree {
         }
     }
 
-    public void postorder() {
-        postorderRec(root);
-    }
-
-    private void postorderRec(Node root) {
+    protected void postorderRec(Node<E> root) {
         if (root != null) {
             postorderRec(root.getLeft());
             postorderRec(root.getRight());
