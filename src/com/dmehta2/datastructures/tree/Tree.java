@@ -19,8 +19,7 @@ public class Tree<E> {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the root node data: ");
         E data = (E) scanner.nextLine();
-        Node<E> newNode = new Node<>(data);
-        root = newNode;
+        root = new Node<>(data);
         queue.enqueue(root);
 
         while (!queue.isEmpty()) {
@@ -65,5 +64,103 @@ public class Tree<E> {
             postorderTraversal(node.getRight());
             System.out.print(node.getData() + " ");
         }
+    }
+
+    public void levelOrderTraversal(Node<E> node) {
+        if (node == null) {
+            return;
+        }
+        Queue<Node<E>> queue = new Queue<>(100);
+        queue.enqueue(node);
+        while (!queue.isEmpty()) {
+            Node<E> currentNode = queue.dequeue();
+            System.out.print(currentNode.getData() + " ");
+            if (currentNode.getLeft() != null) {
+                queue.enqueue(currentNode.getLeft());
+            }
+            if (currentNode.getRight() != null) {
+                queue.enqueue(currentNode.getRight());
+            }
+        }
+    }
+
+    public int height(Node<E> root) {
+        if (root == null) {
+            return 0;
+        } else {
+            int leftHeight = height(root.getLeft());
+            int rightHeight = height(root.getRight());
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
+
+    public int size(Node<E> node) {
+        if (node == null) {
+            return 0;
+        } else {
+            return 1 + size(node.getLeft()) + size(node.getRight());
+        }
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public Node<E> getRoot() {
+        return root;
+    }
+
+    public int countLeaves(Node<E> root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.getLeft() == null && root.getRight() == null) {
+            return 1;
+        }
+        return countLeaves(root.getLeft()) + countLeaves(root.getRight());
+    }
+
+    public int countNonLeaves(Node<E> root) {
+        if (root == null || (root.getLeft() == null && root.getRight() == null)) {
+            return 0;
+        }
+        return 1 + countNonLeaves(root.getLeft()) + countNonLeaves(root.getRight());
+    }
+
+    public int countNodesAtLevel(Node<E> root, int level) {
+        if (root == null) {
+            return 0;
+        }
+        if (level == 1) {
+            return 1;
+        }
+        return countNodesAtLevel(root.getLeft(), level - 1) + countNodesAtLevel(root.getRight(), level - 1);
+    }
+
+    public int countFullNodes(Node<E> root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.getLeft() != null && root.getRight() != null) {
+            return 1 + countFullNodes(root.getLeft()) + countFullNodes(root.getRight());
+        }
+        return countFullNodes(root.getLeft()) + countFullNodes(root.getRight());
+    }
+
+    public int countHalfNodes(Node<E> root) {
+        if (root == null) {
+            return 0;
+        }
+        if ((root.getLeft() != null && root.getRight() == null) || (root.getLeft() == null && root.getRight() != null)) {
+            return 1 + countHalfNodes(root.getLeft()) + countHalfNodes(root.getRight());
+        }
+        return countHalfNodes(root.getLeft()) + countHalfNodes(root.getRight());
+    }
+
+    public int countNodes(Node<E> root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + countNodes(root.getLeft()) + countNodes(root.getRight());
     }
 }
