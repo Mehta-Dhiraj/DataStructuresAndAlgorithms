@@ -1,7 +1,10 @@
 package com.dmehta2.datastructures.tree;
 
 import com.dmehta2.datastructures.queues.Queue;
+import com.dmehta2.datastructures.stack.Stack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Tree<E> {
@@ -42,27 +45,47 @@ public class Tree<E> {
         return root;
     }
 
+    public void preorderTraversal(Node<E> node) {
+//        Stack<Node<E>> stack = new Stack<>(100);
+//        while (node != null || !stack.isEmpty()) {
+//            if (node != null) {
+//                System.out.print(node.getData() + " ");
+//                stack.push(node);
+//                node = node.getLeft();
+//            } else {
+//                Node<E> prev = stack.pop();
+//                node = prev.getRight();
+//            }
+//        }
+
+    }
+
     public void inorderTraversal(Node<E> node) {
-        if (node != null) {
-            inorderTraversal(node.getLeft());
-            System.out.print(node.getData() + " ");
-            inorderTraversal(node.getRight());
+        Stack<Node<E>> stack = new Stack<>(100);
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.getLeft();
+            } else {
+                Node<E> prev = stack.pop();
+                System.out.print(prev.getData() + " ");
+                node = prev.getRight();
+            }
         }
     }
 
-    public void preorderTraversal(Node<E> node) {
-        if (node != null) {
-            System.out.print(node.getData() + " ");
-            preorderTraversal(node.getLeft());
-            preorderTraversal(node.getRight());
-        }
-    }
 
     public void postorderTraversal(Node<E> node) {
-        if (node != null) {
-            postorderTraversal(node.getLeft());
-            postorderTraversal(node.getRight());
-            System.out.print(node.getData() + " ");
+        Stack<Node<E>> stack = new Stack<>(100);
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.getLeft();
+            } else {
+                Node<E> prev = stack.pop();
+                node = prev.getRight();
+                System.out.print(prev.getData() + " ");
+            }
         }
     }
 
@@ -81,6 +104,30 @@ public class Tree<E> {
             if (currentNode.getRight() != null) {
                 queue.enqueue(currentNode.getRight());
             }
+        }
+    }
+
+    public void inorderRec(Node<E> root) {
+        if (root != null) {
+            inorderRec(root.getLeft());
+            System.out.print(root.getData() + " ");
+            inorderRec(root.getRight());
+        }
+    }
+
+    public void preorderRec(Node<E> root) {
+        if (root != null) {
+            System.out.print(root.getData() + " ");
+            preorderRec(root.getLeft());
+            preorderRec(root.getRight());
+        }
+    }
+
+    public void postorderRec(Node<E> root) {
+        if (root != null) {
+            postorderRec(root.getLeft());
+            postorderRec(root.getRight());
+            System.out.print(root.getData() + " ");
         }
     }
 
