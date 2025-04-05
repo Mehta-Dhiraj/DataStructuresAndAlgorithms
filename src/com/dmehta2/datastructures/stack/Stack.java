@@ -1,25 +1,25 @@
 package com.dmehta2.datastructures.stack;
 
-public class Stack {
+public class Stack<E> {
 
-    private final int[] stack;
+    private final Object[] stack;
     private int top;
     private final int size;
 
     public Stack(int size) {
         this.size = size;
-        this.stack = new int[size];
+        this.stack = new Object[size];
         this.top = -1;
     }
 
-    public void createStack(int[] arr,int size) {
+    public void createStack(Object[] arr, int size) {
         for (int i = 0; i < size; i++) {
             top++;
             stack[top] = arr[i];
         }
     }
 
-    public void push(int data) {
+    public void push(E data) {
         if (isFull()) {
             System.out.println("Stack is full");
             return;
@@ -27,12 +27,12 @@ public class Stack {
         stack[++top] = data;
     }
 
-    public int pop() {
+    public E pop() {
         if (isEmpty()) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         }
-        return stack[top--];
+        return (E) stack[top--];
     }
 
     public boolean isFull() {
@@ -43,12 +43,12 @@ public class Stack {
         return top == -1;
     }
 
-    public int peek() {
+    public E peek() {
         if (isEmpty()) {
             System.out.println("Stack is empty");
-            return -1;
+            return null;
         }
-        return stack[top];
+        return (E) stack[top];
     }
 
     public void print() {
@@ -56,6 +56,4 @@ public class Stack {
             System.out.print(stack[i] + " ");
         }
     }
-
-
 }
